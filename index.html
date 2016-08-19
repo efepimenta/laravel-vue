@@ -8,14 +8,15 @@
             .naopago{
                 color: red;
             }
-            .pay-background{
-                background-color: gray;
+            .naoexiste{
+                color: gray;
             }
         </style>
     </head>
     <body id="app">
         <h1>{{ title }}</h1>
-        <h3>{{status}}</h3>
+        <h3 v-if="activateView == 0"
+            :class="{'naoexiste': status === false, 'pago': status === 0, 'naopago': status > 0}">{{status | colorStatus}}</h3>
         <nav>
             <ul>
                 <li v-for="o in menus">
@@ -25,7 +26,7 @@
         </nav>
 
         <div v-if="activateView == 0">
-            <table>
+            <table border="1" cellpadding="10">
                 <thead>
                     <tr>
                         <td>Id</td>
@@ -42,12 +43,14 @@
                         <td>{{o.due_date}}</td>
                         <td>{{o.name}}</td>
                         <td>{{o.value | currency 'R$ ' 2}}</td>
-                        <td class="pay-background" :class="{'pago': o.done, 'naopago': !o.done}">
+                        <td :class="{'pago': o.done, 'naopago': !o.done}">
                             {{o.done | doneLabel}}
                     </td>
                     <td>
                         <a href="#" @click.prevent="loadBill(o)">Edit</a>
-                        <a href="#" @click.prevent="loadBill(o)">Del</a>
+                        <a href="#" @click.prevent="deleteBill(o)">Del</a>
+                        <a href="#" @click.prevent="payBill(o)">Pay</a>
+                        <a href="#" @click.prevent="unpayBill(o)">UnPay</a>
                     </td>
                 </tr>
             </tbody>
