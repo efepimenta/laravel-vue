@@ -1,82 +1,23 @@
 <html>
     <head>
         <title>Contas a Pagar</title>
-        <style type="text/css">
-            .pago{
-                color: green;
-            }
-            .naopago{
-                color: red;
-            }
-            .naoexiste{
-                color: gray;
-            }
-        </style>
+        
     </head>
     <body id="app">
-        <h1>{{ title }}</h1>
-        <h3 v-if="activateView == 0"
-            :class="{'naoexiste': status === false, 'pago': status === 0, 'naopago': status > 0}">{{status | colorStatus}}</h3>
-        <nav>
-            <ul>
-                <li v-for="o in menus">
-                    <a href="#" @click.prevent="showView(o.id)">{{o.name}}</a>
-                </li>
-            </ul>
-        </nav>
-
-        <div v-if="activateView == 0">
-            <table border="1" cellpadding="10">
-                <thead>
-                    <tr>
-                        <td>Id</td>
-                        <td>Vencimento</td>
-                        <td>Nome</td>
-                        <td>Valor</td>
-                        <td>Pago</td>
-                        <td>Ações</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(idx,o) in bills">
-                        <td>{{idx + 1}}</td>
-                        <td>{{o.due_date}}</td>
-                        <td>{{o.name}}</td>
-                        <td>{{o.value | currency 'R$ ' 2}}</td>
-                        <td :class="{'pago': o.done, 'naopago': !o.done}">
-                            {{o.done | doneLabel}}
-                    </td>
-                    <td>
-                        <a href="#" @click.prevent="loadBill(o)">Edit</a>
-                        <a href="#" @click.prevent="deleteBill(o)">Del</a>
-                        <a href="#" @click.prevent="payBill(o)">Pay</a>
-                        <a href="#" @click.prevent="unpayBill(o)">UnPay</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div v-if="activateView == 1">
-        <form name="form" @submit.prevent="submit">
-            <label>Vencimento</label>
-            <input type="text" v-model="bill.due_date">
-            <br>
-            <label>Nome:</label>
-            <select v-model="bill.name">
-                <!--<option v-for="o in names" v-bind:value="o">-->
-                <option v-for="o in names" :value="o">
-                    {{o}}
-                </option>
-            </select>
-            <br>
-            <label>Valor:</label>
-            <input type="text" v-model="bill.value">
-            <br>
-            <input type="submit" value="Enviar">
-        </form>
-    </div>
-
+    <main-component></main-component>
     <script src="node_modules/vue/dist/vue.min.js" type="text/javascript"></script>
-    <script src="app.js" type="text/javascript"></script>
+    <script src="node_modules/vue-router/dist/vue-router.min.js" type="text/javascript"></script>
+    <script src="filters.js" type="text/javascript"></script>
+    <script src="bill.component.js" type="text/javascript"></script>
+    <script src="dashboard.component.js" type="text/javascript"></script>
+    <script src="bill-pay/bill-pay-menu.component.js" type="text/javascript"></script>
+    <script src="bill-pay/bill-pay-list.component.js" type="text/javascript"></script>
+    <script src="bill-pay/bill-pay-create.component.js" type="text/javascript"></script>
+    <script src="bill-pay/bill-pay.component.js" type="text/javascript"></script>
+    <script src="bill-receive/bill-receive-menu.component.js" type="text/javascript"></script>
+    <script src="bill-receive/bill-receive.component.js" type="text/javascript"></script>
+    <script src="bill-receive/bill-receive-create.component.js" type="text/javascript"></script>
+    <script src="bill-receive/bill-receive-list.component.js" type="text/javascript"></script>
+    <script src="main.js" type="text/javascript"></script>
 </body>
 </html>
