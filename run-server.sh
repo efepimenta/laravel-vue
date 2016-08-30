@@ -1,5 +1,5 @@
 #!/bin/bash
-php -S 0.0.0.0:8000 -t api &
+php -S 0.0.0.0:8000 -t api-server &
 PHP=`pgrep -f "php -S"`
 
 lite-server rad

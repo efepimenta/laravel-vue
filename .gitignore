@@ -1,5 +1,3 @@
 node_modules/
-nbproject/
-.idea
-/api/.git/
-/api/vendor/
+/.idea/
+api-server/vendor/**.*
