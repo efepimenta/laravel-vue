@@ -13,14 +13,14 @@ window.billPayListComponent = Vue.extend({
                 <tbody>
                     <tr v-for="(idx,o) in bills">
                         <td>{{idx + 1}}</td>
-                        <td>{{o.due_date}}</td>
+                        <td>{{o.date_due}}</td>
                         <td>{{o.name}}</td>
                         <td>{{o.value | currency 'R$ ' 2}}</td>
                         <td :class="{'pago': o.done, 'naopago': !o.done}">
                             {{o.done | donePayLabel}}
                     </td>
                     <td>
-                        <a v-link="{name: 'bill-pay.update', params: {index: idx}}">Edit</a> |
+                        <a v-link="{name: 'bill-pay.update', params: {id: o.id}}">Edit</a> |
                         <a href="#" @click.prevent="deleteBill(o)">Del</a>
                     </td>
                 </tr>
@@ -28,13 +28,23 @@ window.billPayListComponent = Vue.extend({
         </table>`,
     data: function () {
         return {
-            bills: this.$root.$children[0].billsPay
-        }
+            bills: []
+        };
+    },
+    created: function () {
+        var self = this;
+        BillPay.query().then(function (response) {
+            self.bills = response.data;
+        });
     },
     methods: {
         deleteBill: function (bill) {
             if (confirm('Apagar a conta ' + bill.name + ' ?')) {
-                this.$root.$children[0].billsPay.$remove(bill);
+                var self = this;
+                BillPay.delete({id: bill.id}).then(function (response) {
+                    self.bills.$remove(bill);
+                    self.$dispatch('change-status');
+                });
             }
         }
     }

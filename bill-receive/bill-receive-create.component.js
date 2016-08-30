@@ -1,7 +1,7 @@
 window.billReceiveCreateComponent = Vue.extend({
     template: `<form name="form" @submit.prevent="submit">
             <label>Vencimento</label>
-            <input type="text" v-model="bill.due_date">
+            <input type="text" v-model="bill.date_due">
             <br>
             <label>Nome:</label>
             <select v-model="bill.name">
@@ -39,24 +39,29 @@ window.billReceiveCreateComponent = Vue.extend({
     created: function () {
         if (this.$route.name === 'bill-receive.update'){
             this.formType = 'update';
-            this.getBill(this.$route.params.index);
+            this.getBill(this.$route.params.id);
         }
     },
     methods: {
         submit: function () {
+            var self = this;
             if (this.formType === 'insert') {
-                this.$root.$children[0].billsReceive.push(this.bill);
+                BillReceive.save({}, this.bill).then(function (response) {
+                    self.$dispatch('change-status');
+                    self.$router.go({name: 'bill-receive.list'});
+                })
+            } else {
+                BillReceive.update({id: this.bill.id}, this.bill).then(function (response) {
+                    self.$dispatch('change-status');
+                    self.$router.go({name: 'bill-receive.list'});
+                })
             }
-            this.bill = {
-                due_date: '',
-                name: '',
-                value: 0,
-                done: false
-            };
-            this.$router.go({name: 'bill-receive.list'});
         },
-        getBill: function (index) {
-            this.bill = this.$root.$children[0].billsReceive[index];
+        getBill: function (id) {
+            var self = this;
+            BillReceive.get({id: id}).then(function (response) {
+                self.bill = response.data;
+            });
         }
     }
 });
