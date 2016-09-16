@@ -1,3 +1,4 @@
 node_modules/
 /.idea/
-api-server/vendor/**.*
+api-server/vendor
+/dist/

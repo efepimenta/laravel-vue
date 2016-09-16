@@ -1,3 +1,14 @@
+const names = [
+    'Conta de Luz',
+    'Conta de Agua',
+    'Conta de Telefone',
+    'Conta de Internet',
+    'Conta de Tv',
+    'Conta de Um a Dez',
+    'Conta de Cartão de Crédito',
+    'Gasolina'
+];
+
 window.billPayCreateComponent = Vue.extend({
     template: `<form name="form" @submit.prevent="submit">
             <label>Vencimento</label>
@@ -22,16 +33,7 @@ window.billPayCreateComponent = Vue.extend({
     data: function () {
         return {
             formType : 'insert',
-            names: [
-                'Conta de Luz',
-                'Conta de Agua',
-                'Conta de Telefone',
-                'Conta de Internet',
-                'Conta de Tv',
-                'Conta de Um a Dez',
-                'Conta de Cartão de Crédito',
-                'Gasolina'
-            ],
+            names: names,
             bill: {
                 due_date: '',
                 name: '',

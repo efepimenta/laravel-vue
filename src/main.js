@@ -5,7 +5,7 @@ var mainComponent = Vue.extend({
     template: '<bill-component></bill-component>'
 });
 
-var router = new VueRouter();
+let router = new VueRouter();
 
 router.map({
     'bill-pays': {

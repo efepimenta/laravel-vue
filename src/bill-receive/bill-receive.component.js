@@ -31,7 +31,7 @@ window.billReceiveComponent = Vue.extend({
             if (bills.length === 0) {
                 this.status = false;
             }
-            var count = 0;
+            let count = 0;
             for (var i in bills) {
                 if (!bills[i].done) {
                     count++;
@@ -40,7 +40,7 @@ window.billReceiveComponent = Vue.extend({
             return this.status = count;
         },
         updateStatus: function () {
-            var self =this;
+            let self =this;
             BillReceive.query().then(function (response) {
                 self.calculateStatus(response.data);
             });
